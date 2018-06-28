@@ -3,7 +3,7 @@ FROM mdillon/postgis:9.4-alpine
 WORKDIR /app
 
 RUN set -ex \
-    # && apk update && apk upgrade \
+    && apk update && apk upgrade \
     && apk add --no-cache --virtual .fetch-deps \
         git \
     && apk add --no-cache --virtual .build-deps \
@@ -14,7 +14,6 @@ RUN set -ex \
         g++ \
         libxml2-dev \
         make \
-        # openssl \
         sparsehash \
         zlib-dev \
     # Add libcrypto from (edge:main) for gdal-2.3.0
@@ -25,8 +24,8 @@ RUN set -ex \
         --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
         gdal-dev \
         geos-dev \
-        proj4-dev
-        # protobuf-c-dev
+        proj4-dev \
+    && apk add php7 php7-opcache php7-pgsql php7-intl php7-fpm nginx
 
 # Compile Protozero
 RUN git clone https://github.com/mapbox/protozero.git && \
